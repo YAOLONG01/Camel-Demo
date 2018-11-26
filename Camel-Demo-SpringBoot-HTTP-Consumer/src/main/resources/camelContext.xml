@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camelContext id="Camel" xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="jetty:http://localhost:8083"/>
+            <!--<setHeader headerName="CamelHttpMethod">-->
+                <!--<constant>PUT</constant>-->
+            <!--</setHeader>-->
+            <process ref="httpProcessor"/>
+            <to uri="http://localhost:8081/sm/employee/employee?bridgeEndpoint=true"/>
+            <to uri="stream:out"/>
+        </route>
+    </camelContext>
+
+</beans>
